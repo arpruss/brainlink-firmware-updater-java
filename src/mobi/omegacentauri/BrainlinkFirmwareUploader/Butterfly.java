@@ -1,3 +1,6 @@
+// While the project as a whole is GPL3 licensed, you are free to use the code
+// in this file under the BSD 3-clause-license
+
 package mobi.omegacentauri.BrainlinkFirmwareUploader;
 
 import java.io.BufferedReader;
