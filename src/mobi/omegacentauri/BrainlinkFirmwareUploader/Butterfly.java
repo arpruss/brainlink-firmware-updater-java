@@ -111,6 +111,8 @@ public class Butterfly {
 		if (flash.length != flashSizeBytes) 
 			return false;
 		
+		eraseChip();  
+		
 		for (int address = 0 ; address < flashSizeBytes ; address += flashPageSizeBytes) {
 			int j;
 			
@@ -127,6 +129,12 @@ public class Butterfly {
 		
 		return true; 
 	}
+	
+	public boolean eraseChip() {
+		dataLink.clearBuffer();
+		dataLink.transmit('e');
+		return succeeded();
+	}
 
 	private boolean writeFlashPageChecked(byte[] flash, int address) {
 		byte[] out = new byte[flashPageSizeBytes];
@@ -140,6 +148,22 @@ public class Butterfly {
 		byte[] readBack = readFlashPage(address);
 		if (readBack == null)
 			return false;
+//		if (address == 6400) {
+//			Log.v("BLFW", "original");
+//			for (int i = 0 ; i < out.length ; i += 16) {
+//				String outs = "";
+//				for (int j = 0 ; i + j < out.length && j < 16 ; j++)
+//					outs += String.format("%02x ", out[i+j]);
+//				Log.v("BLFW", outs);
+//			}
+//			Log.v("BLFW", "new");
+//			for (int i = 0 ; i < readBack.length ; i += 16) {
+//				String outs = "";
+//				for (int j = 0 ; i + j < readBack.length && j < 16 ; j++)
+//					outs += String.format("%02x ", readBack[i+j]);
+//				Log.v("BLFW", outs);
+//			}
+//		}
 		return Arrays.equals(readBack, out);
 	}
 	
